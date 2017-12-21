@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/arthurmeng/Documents/code/c:c++/SelectionSort/SortTestHelper.h
+iostream
+-
+ctime
+-
+cassert
+-
+
+/Users/arthurmeng/Documents/code/c:c++/SelectionSort/main.cpp
+iostream
+-
+SortTestHelper.h
+/Users/arthurmeng/Documents/code/c:c++/SelectionSort/SortTestHelper.h
+
