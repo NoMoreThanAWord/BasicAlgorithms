@@ -6,7 +6,7 @@ using namespace std;
 template <typename T>
 void bubbleSort(T arr[], int n)//冒泡排序每一趟从后往前通过交换挤出一个最小的，这样挤n-1次就变的有序了
 {
-    for(int i = 0 ; i < n-1 ; i++)
+    for(int i = 1 ; i < n ; i++)
     {
         for(int j = n-1 ; j >= i ; j--)
         {
@@ -19,7 +19,7 @@ void bubbleSort(T arr[], int n)//冒泡排序每一趟从后往前通过交换�
 template <typename T>
 void improvedBubbleSortOne(T arr[], int n)//第一种优化，对于近乎有序或者直接就是有序的数组，会执行多余的循环。进行判断，如果有序，直接退出
 {
-    for(int i = 0 ; i < n-1 ; i++)
+    for(int i = 1 ; i < n ; i++)
     {
         bool flag = false;
         for(int j = n-1 ; j >= i ; j--)
@@ -38,17 +38,18 @@ void improvedBubbleSortOne(T arr[], int n)//第一种优化，对于近乎有序
 template <typename T>
 void improvedBubbleSortTwo(T arr[], int n)//对于近乎有序的数组，记录最后一次交换的位置，交换位置之前的都为有序，借此缩小第二重循环的搜索范围
 {
-    int flag = 0;
-    int lastSwap = 0;
-    for(int i = 0 ; i < n-1 ; i++)
+    int flag = 1;
+    int lastSwap = 1;
+    for(int i = 1 ; i < n ; i++)
     {
         flag = lastSwap;
+        lastSwap = 1;
         for(int j = n-1 ; j >= flag ; j--)
         {
             if(arr[j] < arr[j-1])
             {
                 swap(arr[j],arr[j-1]);
-                lastSwap = j;
+                lastSwap = j+1;
             }
         }
         if(flag == lastSwap)
@@ -98,10 +99,10 @@ void insertionSort(T arr[], int n)//初级插入排序，每次向一个有序�
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
-    int n = 40000;
+    int n = 16;
     //int a[] = {4,3,2,1};
-    //int *b = SortTestHelper::generateRandomArray(n,0,n);
-    int *b = SortTestHelper::generateNearlyOrderArray(n,90);
+    int *b = SortTestHelper::generateRandomArray(n,0,n);
+    //int *b = SortTestHelper::generateNearlyOrderArray(n,90);
     int *b1 = SortTestHelper::copyIntArray(b,n);
     int *b2 = SortTestHelper::copyIntArray(b,n);
     int *b3 = SortTestHelper::copyIntArray(b,n);
@@ -111,8 +112,8 @@ int main() {
 
 
 
-    SortTestHelper::testSort("insertionSort",insertionSort,b1,n);
-    SortTestHelper::testSort("selectionSort",selectionSort,b2,n);
+    // SortTestHelper::testSort("insertionSort",insertionSort,b1,n);
+    // SortTestHelper::testSort("selectionSort",selectionSort,b2,n);
     SortTestHelper::testSort("improvedInsertionSort",improvedInsertionSort,b3,n);
     SortTestHelper::testSort("bubbleSort",bubbleSort,b4,n);
     SortTestHelper::testSort("improvedBubbleSortOne",improvedBubbleSortOne,b5,n);
