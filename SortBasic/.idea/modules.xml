@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SelectionSort.iml" filepath="$PROJECT_DIR$/.idea/SelectionSort.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../InsertionSort/.idea/SelectionSort.iml" filepath="$PROJECT_DIR$/../InsertionSort/.idea/SelectionSort.iml" />
     </modules>
   </component>
 </project>
