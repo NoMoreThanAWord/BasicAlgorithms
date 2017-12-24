@@ -1,0 +1,20 @@
+Detecting C [-std=c11] compiler features failed to compile with the following output:
+Change Dir: /Users/arthurmeng/Documents/code/c:c++/MaxHeap/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_76229/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_76229.dir/build.make CMakeFiles/cmTC_76229.dir/build
+CMakeFiles/cmTC_76229.dir/build.make:64: *** target pattern contains no `%'.  Stop.
+make: *** [cmTC_76229/fast] Error 2
+
+
+
+Detecting CXX [-std=c++1z] compiler features failed to compile with the following output:
+Change Dir: /Users/arthurmeng/Documents/code/c:c++/MaxHeap/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f49c8/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f49c8.dir/build.make CMakeFiles/cmTC_f49c8.dir/build
+CMakeFiles/cmTC_f49c8.dir/build.make:64: *** target pattern contains no `%'.  Stop.
+make: *** [cmTC_f49c8/fast] Error 2
+
+
+
