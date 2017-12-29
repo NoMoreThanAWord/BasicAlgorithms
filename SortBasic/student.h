@@ -1,5 +1,5 @@
 //
-// Created by ArthurMeng on 21/12/2017.
+// Created by ArthurMeng on 21/12/2017. LOL
 //
 
 #ifndef SELECTIONSORT_STUDENT_H
