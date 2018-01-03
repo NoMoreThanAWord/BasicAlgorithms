@@ -13,10 +13,10 @@
 #include <stack>
 
 using namespace std;
-
+//BellmanFord 算法，对所有顶点进行 V-1 轮松弛操作，即可得到所有顶点的最短路径。如果还能进行松弛操作的话，说明图中有负权边。
 template <typename Graph, typename Weight>
 class BellmanFord
-{
+{//不用 marked 数组来记录是否找到最短路径了，只维护 from 数组跟 disTo 数组就行了
 private:
     Graph &G;
     int s;
@@ -24,16 +24,16 @@ private:
     vector<Edge<Weight>*> from;
     bool hasNegativeCycle;
 
-    bool detectNegativeCycle()
+    bool detectNegativeCycle()//检查是否有负权环，再对所有节点进行一轮松弛操作，如果可以进行，说明存在，否则没有
     {
         for(int i = 0 ; i < G.V() ; i++)
         {
             typename Graph::adjIterator adj(G, i);
             for(Edge<Weight> *p = adj.begin() ; !adj.end() ; p = adj.next())
             {
-                if(from[p->w()] == NULL || distTo[p->w()] > distTo[p->v()] + p->wt())
+                if(from[p->w()] == NULL || distTo[p->w()] > distTo[p->v()] + p->wt())//可以松弛
                 {
-                    return true;
+                    return true;//返回真
                 }
             }
         }
@@ -49,12 +49,12 @@ public:
             from.push_back(NULL);
         distTo[s] = Weight();
 
-        for(int round = 1 ; round < G.V() ; round++)
+        for(int round = 1 ; round < G.V() ; round++)// V-1 轮
         {
-            for(int i = 0 ; i < G.V() ; i++)
+            for(int i = 0 ; i < G.V() ; i++)// V 个顶点
             {
                 typename Graph::adjIterator adj(G, i);
-                for(Edge<Weight> *p = adj.begin() ; !adj.end() ; p = adj.next())
+                for(Edge<Weight> *p = adj.begin() ; !adj.end() ; p = adj.next())//松弛操作
                 {
                     if(!from[p->w()] || distTo[p->w()] > distTo[p->v()] + p->wt())
                     {

@@ -13,16 +13,16 @@
 #include "DenseGraph.h"
 #include "IndexMinHeap.h"
 using namespace std;
-
+//Dijkstra 单源最短路径算法(不能存在负权边)，经由当前最短节点对其他节点进行松弛操作，不断找出最短节点
 template <typename Graph, typename Weight>
 class Dijkstra
 {
     int s;
     Graph &G;
 
-    Weight *distTo;
+    Weight *distTo;//到某节点的距离
     bool *marked;
-    vector<Edge<Weight>*> from;
+    vector<Edge<Weight>*> from;//某节点的来向边
 
 public:
     Dijkstra(Graph &graph, int s) : G(graph)
@@ -34,34 +34,34 @@ public:
 
         for(int i = 0 ; i < G.V() ; i++)
         {
-            distTo[i] = Weight();
+            distTo[i] = Weight();//到所有点的距离都初始化为默认值
             marked[i] = false;
-            from.push_back(NULL);
+            from.push_back(NULL);//来向边都初始化为空
         }
 
         IndexMinHeap<Weight> ipq(G.V());
-        marked[s] = true;
-        distTo[s] = Weight();
-        from[s] = new Edge<Weight>(s, s, 0);
-        ipq.insert(s, 0);
+        marked[s] = true;//标记源点为已经访问
+        distTo[s] = Weight();//到源点的距离问默认值
+        from[s] = new Edge<Weight>(s, s, 0);//源点从自己来
+        ipq.insert(s, 0);//插入优先队列
 
         while(!ipq.isEmpty())
         {
-            int v = ipq.extractMinIndex();
-            marked[v] = true;
+            int v = ipq.extractMinIndex();//取出当前距离源点最近的节点，即为找到最短路径的节点
+            marked[v] = true;//标记为已找到最短路径
             typename Graph::adjIterator adj(G, v);
-            for(Edge<Weight> *p = adj.begin() ; !adj.end() ; p = adj.next())
+            for(Edge<Weight> *p = adj.begin() ; !adj.end() ; p = adj.next())//对相邻节点进行松弛操作
             {
-                if(!marked[p->w()])
-                {
+                if(!marked[p->w()])//未找到最短路径
+                {//未曾访问或是经由最短节点后路径边短
                     if(from[p->w()] == NULL || distTo[p->w()] > (distTo[p->v()] + p->wt()) )
                     {
-                        distTo[p->w()] = distTo[p->v()] + p->wt();
-                        if(!ipq.contain(p->w()))
+                        distTo[p->w()] = distTo[p->v()] + p->wt();//更新距离
+                        if(!ipq.contain(p->w()))//第一次访问执行插入
                             ipq.insert(p->w(), distTo[p->w()]);
-                        else
+                        else//成功松弛执行更新
                             ipq.change(p->w(), distTo[p->w()]);
-                        from[p->w()] = p;
+                        from[p->w()] = p;//记录来向边
                     }
                 }
             }
