@@ -28,14 +28,14 @@ public:
         this->directed = directed;
         this->m = 0;
         for(int i = 0 ; i < n ; i++)
-            g.push_back(vector<Edge<Weight>*>(n, NULL));
+            g.push_back(vector<Edge<Weight>*>(n, NULL));//vector 的第二维压入 n 个空值占位
     }
 
     ~DenseGraph()
     {
         for(int i = 0 ; i < n ; i++)
             for(int j = 0 ; j < n ; j++)
-                if(g[i][j])
+                if(g[i][j])//不为空值，释放空间
                     delete g[i][j];
     }
 
@@ -46,7 +46,7 @@ public:
     {
         assert(v >= 0 && v < n);
         assert(w >= 0 && w < n);
-        return g[v][w] != NULL;
+        return g[v][w] != NULL;//占位不为空即存在边
     }
 
     void addEdge(int v, int w, Weight weight)
@@ -54,22 +54,22 @@ public:
         assert(v >= 0 && v < n);
         assert(w >= 0 && w < n);
 
-        if(hasEdge(v, w))
+        if(hasEdge(v, w))//已经存在边默认操作为删除后重新添加(与更新权值其实是一样的)
         {
             delete g[v][w];
             if(!directed)
                 delete g[w][v];
-            m--;
+            m--;//删除操作更新边值
         }
 
 
-        g[v][w] = new Edge<Weight>(v, w, weight);
-        if(!directed)
+        g[v][w] = new Edge<Weight>(v, w, weight);//添加边
+        if(!directed)//无向图对称添加
             g[w][v] = new Edge<Weight>(w, v, weight);
-        m++;
+        m++;//更新边值
     }
 
-    void show()
+    void show()//邻接矩阵打印展示稠密图
     {
         for(int i = 0 ; i < n ; i++)
         {

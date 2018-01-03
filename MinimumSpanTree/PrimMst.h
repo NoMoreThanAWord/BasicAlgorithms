@@ -11,14 +11,14 @@
 #include <cassert>
 #include <vector>
 using namespace std;
-
+//prim 改进了 lazyPrim 从优先队列中取出边需要二次判断的问题,最小生成树中同一点所对应的切分只保存最小的，这样在优先队列取出时不用再二次判断了
 template <typename Graph, typename Weight>
 class PrimMst
 {
 private:
     Graph &G;
-    IndexMinHeap<Weight> ipq;
-    vector<Edge<Weight>*> edgeTo;
+    IndexMinHeap<Weight> ipq;//某边所对应的最小切边的权值
+    vector<Edge<Weight>*> edgeTo;//存放到某点的权值最短边
     vector<Edge<Weight>> mst;
     bool *marked;
     Weight mstWeight;
@@ -30,18 +30,18 @@ private:
         typename Graph::adjIterator adj(G, v);
         for(Edge<Weight> *p = adj.begin() ; !adj.end() ; p = adj.next())
         {
-            if(marked[p->other(v)])
+            if(marked[p->other(v)])//不是切边继续
                 continue;
-            else
+            else//是切边
             {
-                if(edgeTo[p->other(v)] == NULL)
+                if(edgeTo[p->other(v)] == NULL)//从未出现过的边
                 {
                     edgeTo[p->other(v)] = p;
-                    ipq.insert(p->other(v), p->wt());
+                    ipq.insert(p->other(v), p->wt());//插入
                 }
-                else
+                else//以前出现过的边
                 {
-                    if(p->wt() < ipq.getItem(p->other(v)))
+                    if(p->wt() < ipq.getItem(p->other(v)))//比较大小，保留权值较小的边
                     {
                         edgeTo[p->other(v)] = p;
                         ipq.change(p->other(v), p->wt());
@@ -66,7 +66,7 @@ public:
 
         while(!ipq.isEmpty())
         {
-            int min = ipq.extractMinIndex();
+            int min = ipq.extractMinIndex();//取出时不用再进行判断
             assert(edgeTo[min]);
             Edge<Weight> temp = *edgeTo[min];
             mst.push_back(temp);

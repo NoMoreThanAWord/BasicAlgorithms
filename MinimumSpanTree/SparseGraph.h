@@ -11,7 +11,7 @@
 #include "Edge.h"
 
 using namespace std;
-
+//带权稀疏图
 template <typename Weight>
 class SparseGraph
 {
@@ -19,7 +19,7 @@ private:
     int n;
     int m;
     bool directed;
-    vector<vector<Edge<Weight>*>> g;
+    vector<vector<Edge<Weight>*>> g;//改造后的二维 vector 中存放的不在是 bool 值，而是 Edge 的指针
 
 public:
     SparseGraph(int n, bool directed)
@@ -28,7 +28,7 @@ public:
         this->m = 0;
         this->directed = directed;
         for(int i = 0 ; i < n ; i++)
-            g.push_back(vector<Edge<Weight>*>());
+            g.push_back(vector<Edge<Weight>*>());//需要 Edge 类的无参构造函数
     }
 
     ~SparseGraph()
@@ -41,29 +41,29 @@ public:
     int V(){return n;}
     int E(){return m;}
 
-    bool hasEdge(int v, int w)
+    bool hasEdge(int v, int w)//查找边是否存在还是要遍历
     {
         assert(v >= 0 && v < n);
         assert(w >= 0 && w < n);
         for(int i = 0 ; i < g[v].size() ; i++)
-            if(g[v][i]->other(v) == w)
+            if(g[v][i]->other(v) == w)//另一端为 w，确认边存在
                 return true;
         return false;
     }
 
-    void addEdge(int v, int w, Weight weight)
+    void addEdge(int v, int w, Weight weight)//同样没有处理平行边的问题
     {
         assert(v >= 0 && v < n);
         assert(w >= 0 && w < n);
 
         g[v].push_back(new Edge<Weight>(v, w, weight));
-        if(!directed && v != w)
+        if(!directed && v != w)//无向图添加对称边
             g[w].push_back(new Edge<Weight>(w, v, weight));
 
-        m++;
+        m++;//更新边数
     }
 
-    void show()
+    void show()//邻接表打印展示稀疏图
     {
         for(int i = 0 ; i < n ; i++)
         {
@@ -88,10 +88,10 @@ public:
             this->v = v;
         }
 
-        Edge<Weight>* begin()
+        Edge<Weight>* begin()//返回值不同
         {
             index = 0;
-            if(G.g[v].size())
+            if(G.g[v].size())//确认 size
                 return G.g[v][index];
             return NULL;
         }
@@ -99,7 +99,7 @@ public:
         Edge<Weight>* next()
         {
             index++;
-            if(index < G.g[v].size())
+            if(index < G.g[v].size())//确定没有越界
                 return G.g[v][index];
             return NULL;
         }
