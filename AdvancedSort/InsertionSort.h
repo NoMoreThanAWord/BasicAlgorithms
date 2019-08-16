@@ -4,6 +4,9 @@
 
 #ifndef ADVANCEDSORT_INSERTIONSORT_H
 #define ADVANCEDSORT_INSERTIONSORT_H
+
+// 用于在归并排序中调用
+// 当数组大小比较小时，趋向于有序，这时使用插入排序会比归并更快
 template <typename T>
 void insertionSort(T arr[], int l, int r)
 {

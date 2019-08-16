@@ -58,7 +58,7 @@ void __mergeSort(T arr[], int l, int r)
     int mid = (l+r) / 2;
     __mergeSort(arr, l, mid);
     __mergeSort(arr, mid+1, r);
-    if(arr[mid] > arr[mid+1])//当数组近乎有序时，可以加上这句，用来减少归并次数，注意判断也会增加开销
+    if(arr[mid] > arr[mid+1])//当要归并的两部分已经有序时，减少无用的归并，注意判断也会增加开销
         __merge(arr, l, mid, r);
 }
 
@@ -75,6 +75,7 @@ void mergeSort(T arr[], int n)
 template <typename T>
 void __improvedMergeSort(T arr[], int l, int r)
 {
+    //当数组长度小于15时，可以看做是近乎有序，此时使用插入排序来处理会更快
     if(l - r <= 15)
     {
         insertionSort(arr, l, r);

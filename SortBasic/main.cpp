@@ -112,8 +112,8 @@ int main() {
 
 
 
-    // SortTestHelper::testSort("insertionSort",insertionSort,b1,n);
-    // SortTestHelper::testSort("selectionSort",selectionSort,b2,n);
+    SortTestHelper::testSort("insertionSort",insertionSort,b1,n);
+    SortTestHelper::testSort("selectionSort",selectionSort,b2,n);
     SortTestHelper::testSort("improvedInsertionSort",improvedInsertionSort,b3,n);
     SortTestHelper::testSort("bubbleSort",bubbleSort,b4,n);
     SortTestHelper::testSort("improvedBubbleSortOne",improvedBubbleSortOne,b5,n);
